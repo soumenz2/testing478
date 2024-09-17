@@ -1,10 +1,20 @@
 // Navbar.js
 import React, { useState } from 'react';
 import './Navbar.css';
+import RegisterModal from '../modalPage/registration';
+import LoginModal from '../modalPage/login';
 
 const Navbar = () => {
   const [isLoggedIn] = useState(false); // Simulate logged-in state
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  const openLoginModal = () => setIsLoginOpen(true);
+  const closeLoginModal = () => setIsLoginOpen(false);
+
+  const openRegisterModal = () => setIsRegisterOpen(true);
+  const closeRegisterModal = () => setIsRegisterOpen(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +22,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+      
       {/* Conditionally render the navbar options */}
       <div className={`navbar-options ${isMenuOpen ? 'active' : ''}`}>
         {isLoggedIn ? (
@@ -24,8 +35,8 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button className="btn-register">Register Now</button>
-            <button className="btn-signin">Sign In</button>
+            <button className="btn-register" onClick={openRegisterModal}>Register Now</button>
+            <button className="btn-signin" onClick={openLoginModal}>Sign In</button>
           </>
         )}
       </div>
@@ -34,7 +45,14 @@ const Navbar = () => {
       <div className="menu-icon" onClick={toggleMenu}>
         <span>&#9776;</span> {/* Hamburger icon */}
       </div>
+      {
+      isRegisterOpen && <RegisterModal isOpen={openRegisterModal} onClose={closeRegisterModal}/>
+    }
+    {
+      isLoginOpen && <LoginModal  isOpen={openLoginModal} onClose={closeLoginModal}/>
+    }
     </nav>
+  
   );
 };
 

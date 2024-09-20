@@ -1,14 +1,16 @@
-// Navbar.js
 import React, { useState } from 'react';
 import './Navbar.css';
 import RegisterModal from '../modalPage/registration';
 import LoginModal from '../modalPage/login';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearUserId } from '../../redux/userslice';
 
 const Navbar = () => {
-  const [isLoggedIn] = useState(false); // Simulate logged-in state
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const userIDfromREdux = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
 
   const openLoginModal = () => setIsLoginOpen(true);
   const closeLoginModal = () => setIsLoginOpen(false);
@@ -20,39 +22,52 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = () => {
+    dispatch(clearUserId());
+    setIsMenuOpen(false); // Close menu on logout
+  };
+
   return (
     <nav className="navbar">
-      
+      {/* Hamburger Menu for mobile view */}
+      <div className="menu-icon" onClick={toggleMenu}>
+        <span>&#9776;</span> {/* Hamburger icon */}
+      </div>
+
       {/* Conditionally render the navbar options */}
       <div className={`navbar-options ${isMenuOpen ? 'active' : ''}`}>
-        {isLoggedIn ? (
+        {userIDfromREdux ? (
           <>
+            <div className="user-profile">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="User Profile"
+                onError={(e) => (e.target.src = 'default-profile-pic.png')} // Fallback image
+              />
+              <div className="profile-info">
+                <p>{userIDfromREdux}</p> {/* Display username */}
+              </div>
+            </div>
             <button className="btn-bookmarks">Bookmarks</button>
             <button className="btn-add-story">Add story</button>
-            <div className="user-profile">
-              <img src="https://via.placeholder.com/40" alt="User Profile" />
+            <div className="profile-dropdown">
+              <button className="btn-logout" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </>
         ) : (
           <>
             <button className="btn-register" onClick={openRegisterModal}>Register Now</button>
-            <button className="btn-signin" onClick={openLoginModal}>Sign In</button>
+            <button className="btn-signin" onClick={openLoginModal} >Sign In</button>
           </>
         )}
       </div>
 
-      {/* Hamburger Menu for mobile view - placed after the options to align right */}
-      <div className="menu-icon" onClick={toggleMenu}>
-        <span>&#9776;</span> {/* Hamburger icon */}
-      </div>
-      {
-      isRegisterOpen && <RegisterModal isOpen={openRegisterModal} onClose={closeRegisterModal}/>
-    }
-    {
-      isLoginOpen && <LoginModal  isOpen={openLoginModal} onClose={closeLoginModal}/>
-    }
+      {/* Modals */}
+      {isRegisterOpen && <RegisterModal isOpen={isRegisterOpen} onClose={closeRegisterModal} />}
+      {isLoginOpen && <LoginModal isOpen={isLoginOpen} onClose={closeLoginModal} toggleMenu={toggleMenu}/>}
     </nav>
-  
   );
 };
 

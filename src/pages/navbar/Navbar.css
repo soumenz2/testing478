@@ -11,6 +11,7 @@
 .navbar-options {
   display: flex;
   align-items: center;
+  gap: 20px; /* Adjust spacing between items */
 }
 
 .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
@@ -21,6 +22,11 @@
   color: white;
   background-color: #f88a8a;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-register:hover, .btn-signin:hover, .btn-bookmarks:hover, .btn-add-story:hover {
+  background-color: #e07a7a;
 }
 
 .user-profile img {
@@ -30,18 +36,13 @@
   margin-right: 1rem;
 }
 
-.menu-icon {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
 /* Mobile view */
 @media only screen and (max-width: 768px) {
   .navbar-options {
     display: none; /* Hide options by default */
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 60px; /* Adjust to ensure it doesn't overlap */
     left: 0;
     width: 100%;
     background-color: white;
@@ -54,14 +55,40 @@
     display: flex; /* Show options when the menu is active */
   }
 
+  .user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+    /* Ensure profile is at the top */
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: auto; /* Push logout button to the bottom */
+  }
+
+  .profile-dropdown {
+    margin-top: auto; /* Push logout button to the bottom */
+  }
+
   .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
     width: 100%;
     margin-bottom: 1rem;
   }
 
   .menu-icon {
+    display: block; /* Show the hamburger icon on mobile */
     font-size: 1.5rem;
     cursor: pointer;
-    margin-left: auto; /* Move the hamburger icon to the far right */
+  }
+}
+
+/* Hide hamburger icon on larger screens */
+@media only screen and (min-width: 769px) {
+  .menu-icon {
+    display: none;
   }
 }

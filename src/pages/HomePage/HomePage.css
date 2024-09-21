@@ -73,4 +73,15 @@
     margin-left: auto;
     margin-right: auto;
   }
+  .category-card {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s;
+  }
+  
+  .category-card.active {
+    background-color: #007bff; /* Change this color as needed */
+    color: white; /* Change text color for better visibility */
+  }
   

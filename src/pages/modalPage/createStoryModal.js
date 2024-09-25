@@ -124,7 +124,7 @@ const CreateStoryModal = ({ isOpen, onClose }) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <div className="slide-navigation">
+        <div className="slide-navigation1">
           {slides.map((_, idx) => (
             <button
               key={idx}

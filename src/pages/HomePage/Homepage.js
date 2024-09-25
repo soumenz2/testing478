@@ -87,7 +87,7 @@ const HomePage = () => {
 
       {/* Map through the story data to render categories and their stories */}
       {storyData.map((categoryData, index) => (
-        <div key={index} className="category-section">
+        <div key={index} className="category-section1">
           <h2 className="top-stories-heading">Top Stories in {categoryData.category}</h2>
           {Array.isArray(categoryData.stories) && categoryData.stories.length === 0 ? (
             <div className="no-stories-container">
@@ -99,7 +99,20 @@ const HomePage = () => {
                 {/* Map through the stories */}
                 {Array.isArray(categoryData.stories) && categoryData.stories.map((story, idx) => (
                   <div key={idx} className="story-card" onClick={() => handleStoryClick(story.storyID)}>
-                    <div className="story-image"></div>
+                    {story?.slides[0].imageOrVideoURl.endsWith('.mp4') ? (
+                      <video 
+                        src={story?.slides[0].imageOrVideoURl} 
+                        autoPlay 
+                        muted 
+                        playsInline
+                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }} 
+                      />
+                    ) : (
+                      <img
+                        src={story?.slides[0].imageOrVideoURl}
+                        alt={`Slide ${0 + 1}`}
+                      />
+                    )}
                     <h3>{story?.slides[0].heading}</h3>
                     <p>{story?.slides[0].description}</p>
                   </div>

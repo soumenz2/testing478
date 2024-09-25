@@ -5,6 +5,12 @@
 
 .category-section {
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+}
+.category-section1 {
+  margin-bottom: 40px;
+
 }
 
 .top-stories-heading {
@@ -16,13 +22,20 @@
 
 /* Category Cards */
 .category-card {
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
   margin: 10px;
   padding: 15px;
   border: 2px solid transparent;
+  justify-content: center; /* Horizontally center */
+  align-items: center; 
   border-radius: 10px;
   cursor: pointer;
   transition: border-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(12, 0, 0, 0.3);
+  height:10vh;
+  width:10vw
+  
 }
 
 .category-card.active {
@@ -43,12 +56,13 @@
 }
 
 .story-card {
-  background-color: #fff;
+  background-color: #080808fa;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(12, 0, 0, 0.959);
   padding: 15px;
   text-align: center;
+  height: 35vh;
 }
 
 .story-card .story-image {
@@ -61,11 +75,12 @@
 .story-card h3 {
   font-size: 18px;
   margin: 10px 0;
+  color: #f7f2f2;
 }
 
 .story-card p {
   font-size: 14px;
-  color: #666;
+  color: #fcf6f6;
 }
 
 /* See More Button */
@@ -100,6 +115,7 @@
 
   .story-card h3 {
     font-size: 16px;
+    color: #f7f2f2;
   }
 }
 /* Center 'No stories found' message */
@@ -113,7 +129,7 @@
 
 .no-stories-container p {
   font-size: 20px;
-  color: #666;
+  color: #f7f2f2;
 }
 
 /* Center 'See More' button */

@@ -1,0 +1,163 @@
+/* Modal Overlay */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 600px;
+    max-width: 90%;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Slide Navigation */
+  .slide-navigation {
+    display: flex;
+    
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .slide-tab {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .slide-tab.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .remove-slide {
+    color: red;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .error{
+    color: red;
+  }
+  
+  .add-slide-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-slide-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Slide Form Fields */
+  .slide-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .slide-form label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .slide-form input,
+  .slide-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  textarea {
+    resize: vertical;
+    height: 80px;
+  }
+  
+  /* Navigation Buttons */
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .prev-btn,
+  .next-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .prev-btn:disabled,
+  .next-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .prev-btn:hover:not(:disabled),
+  .next-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  /* Post Button */
+  .post-section {
+    text-align: right;
+  }
+  
+  .post-btn {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .post-btn:hover {
+    background-color: #e85c50;
+  }
+  
+  /* Close Button */
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ff6f61;
+    border: none;
+  }
+  
+  .close-modal:hover {
+    color: #e85c50;
+  }
+  

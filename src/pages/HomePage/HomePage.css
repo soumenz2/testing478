@@ -1,87 +1,141 @@
-/* HomePage.css */
+/* General styling */
 .homepage {
-    padding: 20px;
-  }
-  
-  .category-section {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    margin-bottom: 20px;
-  }
-  
-  .category-card {
-    flex: 0 0 auto;
-    width: 150px;
-    text-align: center;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    padding: 10px;
-  }
-  
-  .category-card h3 {
-    margin-top: 10px;
-  }
-  
-  .category-image {
-    width: 100px;
-    height: 100px;
-    background-color: #ddd;
-    border-radius: 50%;
-    margin: 0 auto;
-  }
-  
-  .top-stories {
-    margin-top: 30px;
-  }
-  
-  .top-stories h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
+  padding: 20px;
+}
+
+.category-section {
+  margin-bottom: 40px;
+}
+
+.top-stories-heading {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Category Cards */
+.category-card {
+  display: inline-block;
+  margin: 10px;
+  padding: 15px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.category-card.active {
+  border-color: #FF6347; /* Highlight active category */
+}
+
+.category-card h3 {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Stories Grid for Desktop */
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 stories per row on desktop */
+  gap: 20px;
+}
+
+.story-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.story-card .story-image {
+  height: 200px;
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+}
+
+.story-card h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.story-card p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* See More Button */
+.see-more-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #FF6347;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.see-more-btn:hover {
+  background-color: #FF4500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  /* 1 story per row on mobile */
   .stories-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
   }
-  
-  .story-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .story-image {
-    width: 100%;
-    height: 150px;
-    background-color: #ddd;
-    border-radius: 10px;
-  }
-  
-  .see-more-btn {
-    background-color: #ff6f61;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-top: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+
   .category-card {
-    cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ccc;
-    transition: background-color 0.3s;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
   }
-  
-  .category-card.active {
-    background-color: #007bff; /* Change this color as needed */
-    color: white; /* Change text color for better visibility */
+
+  .story-card h3 {
+    font-size: 16px;
   }
-  
+}
+/* Center 'No stories found' message */
+.no-stories-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Adjust to set vertical space */
+  text-align: center;
+}
+
+.no-stories-container p {
+  font-size: 20px;
+  color: #666;
+}
+
+/* Center 'See More' button */
+.see-more-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Style for the 'See More' button */
+.see-more-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff6b6b; /* Example button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.see-more-btn:hover {
+  background-color: #ff4949; /* Darker shade on hover */
+}

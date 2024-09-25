@@ -62,7 +62,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
   return (
     <div className="modal-overlay">
       <ToastContainer />
-      <div className="modal">
+      <div className="modal1">
         <button className="close-btn" onClick={onClose}>
           &#10006;
         </button>

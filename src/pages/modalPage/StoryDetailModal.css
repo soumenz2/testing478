@@ -1,0 +1,192 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #e2d9d9;
+  color: white;
+  width: 90%;
+  max-width: 500px;
+  max-height:800px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Story Header with Progress Bars */
+.story-header {
+  position: relative;
+  top: 0;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+.progress-indicator {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 4px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  margin: 0 2px;
+  height: 100%;
+  background: rgba(15, 0, 0, 0.904);
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar .fill {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  background: rgba(5, 223, 34, 0.9); /* Green fill */
+  width: 0%; /* Initially 0%, to be set dynamically */
+  transition: width 0.2s ease; /* Smooth transition */
+}
+
+.progress-bar::before {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: rgba(5, 223, 34, 0.9);
+  transition: width 0.2s ease;
+}
+
+.progress-bar.filled::before {
+  width: 100%;
+}
+
+/* Close and Share Buttons */
+.header-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.close-button, .share-button {
+  position:relative;
+  font-size: 20px;
+  background: rgb(67, 177, 67);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+
+
+/* Story Slides Container */
+.story-slides-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  overflow: hidden;
+}
+
+.story-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+img, video {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+/* Slide Navigation */
+.slide-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  margin-right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.action-buttons span {
+  margin-left: 10px;
+  font-weight: bold;
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.bookmark-button, .like-button, .download-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: black; /* Default color */
+}
+
+.bookmark-button:hover, .like-button:hover, .download-button:hover {
+  opacity: 0.8; /* Add hover effect */
+}
+.like-group{
+  display:flex;
+  gap: 0px;
+}
+.like-count {
+  font-size: 16px;  /* Font size for the like count */
+  color: #666;      /* Gray color for default state */
+  margin-left: 5px; /* Space between the like button and the count */
+  font-weight: bold; /* Make the number bold */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+

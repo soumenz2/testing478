@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Navbar.css';
 import RegisterModal from '../modalPage/registration';
 import LoginModal from '../modalPage/login';
+import CreateStoryModal from '../modalPage/createStoryModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearUserId } from '../../redux/userslice';
 
@@ -9,6 +10,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const[iscreateSoryOpen,setIsCreateStoryOpen]=useState(false)
   const userIDfromREdux = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
 
@@ -17,6 +19,9 @@ const Navbar = () => {
 
   const openRegisterModal = () => setIsRegisterOpen(true);
   const closeRegisterModal = () => setIsRegisterOpen(false);
+  const openCreateSoryModal=()=>setIsCreateStoryOpen(true)
+  const closeCreateSoryModal=()=>setIsCreateStoryOpen(false)
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -49,7 +54,7 @@ const Navbar = () => {
               </div>
             </div>
             <button className="btn-bookmarks">Bookmarks</button>
-            <button className="btn-add-story">Add story</button>
+            <button className="btn-add-story" onClick={openCreateSoryModal}>Add story</button>
             <div className="profile-dropdown">
               <button className="btn-logout" onClick={handleLogout}>
                 Logout
@@ -67,6 +72,7 @@ const Navbar = () => {
       {/* Modals */}
       {isRegisterOpen && <RegisterModal isOpen={isRegisterOpen} onClose={closeRegisterModal} />}
       {isLoginOpen && <LoginModal isOpen={isLoginOpen} onClose={closeLoginModal} toggleMenu={toggleMenu}/>}
+      {iscreateSoryOpen && <CreateStoryModal isOpen={iscreateSoryOpen} onClose={closeCreateSoryModal}/>}
     </nav>
   );
 };

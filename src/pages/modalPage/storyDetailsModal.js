@@ -17,6 +17,8 @@ const StoryDetailModal = () => {
   const { storyID } = useParams(); // Capture storyID from URL
   const navigate = useNavigate();
   const location = useLocation();
+  const defaultImageTime = 5000; // Time in milliseconds for images
+  const defaultVideoTime = 15000; // Max time in milliseconds for videos
 
   useEffect(() => {
     const fetchStoryDetails = async () => {
@@ -52,7 +54,16 @@ const StoryDetailModal = () => {
   }, [location.search, slides]);
 
   useEffect(() => {
+    if (slides.length === 0) return; // Prevent errors if slides are empty
+
+    // Reset progress for the new slide
     setProgress(0);
+
+    // Determine the duration for the current slide
+    const currentSlideData = slides[currentSlide];
+    console.log("video duration",currentSlideData.videoDuration )
+    const isVideo = currentSlideData.imageOrVideoURl.endsWith('.mp4');
+    const slideDuration = isVideo ? Math.min(currentSlideData.videoDuration || defaultVideoTime, defaultVideoTime) : defaultImageTime;
 
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
@@ -61,16 +72,18 @@ const StoryDetailModal = () => {
           handleNextSlide();
           return 0;
         }
-        return prev + 2; // Adjust speed as needed
+        return prev + (100 / (slideDuration / 100)); // Calculate increment based on slide duration
       });
-    }, 300); // Adjust time interval as needed
+    }, 100); // 
 
     return () => clearInterval(progressInterval); // Clear interval on unmount or slide change
-  }, [currentSlide]);
+  }, [currentSlide, slides]);
 
   const handleNextSlide = () => {
     if (slides.length > 0 && currentSlide < slides.length - 1) {
       setCurrentSlide(currentSlide + 1);
+    } else if (currentSlide === slides.length - 1) {
+      handleClose(); 
     }
   };
 

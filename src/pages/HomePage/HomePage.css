@@ -22,6 +22,7 @@
 
 /* Category Cards */
 .category-card {
+  position: relative;
   display: flex;
   flex-direction: row;
   margin: 10px;
@@ -31,21 +32,49 @@
   align-items: center; 
   border-radius: 10px;
   cursor: pointer;
-  transition: border-color 0.3s ease;
-  box-shadow: 0 4px 12px rgba(12, 0, 0, 0.3);
-  height:10vh;
-  width:10vw
+
+  box-shadow: 0 4px 12px rgba(12, 0, 0, 0.6);
+  height:15vh;
+  width:10vw;
+  transition: transform 0.3s;
+  overflow: hidden;
+  border-color: transparent;
   
+}
+.category-card .background {
+  position: absolute; /* Position the background image absolutely */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Cover the entire card */
+  opacity: 0.9; /* Background opacity */
+  z-index: 0; /* Ensure it is below the text */
+}
+.category-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 0; 
 }
 
 .category-card.active {
-  border-color: #FF6347; /* Highlight active category */
+  border-color: #6f47ff;
+  box-shadow: 0 4px 12px rgba(24, 11, 212, 0.918); /* Highlight active category */
 }
+
 
 .category-card h3 {
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 32px;
   text-align: center;
+  color: rgb(250, 252, 252);
+  position: relative; /* To ensure the text is above the background */
+  z-index: 1;
 }
 
 /* Stories Grid for Desktop */
@@ -62,7 +91,7 @@
   box-shadow: 0 4px 12px rgba(12, 0, 0, 0.959);
   padding: 15px;
   text-align: center;
-  height: 35vh;
+  height: 55vh;
 }
 
 .story-card .story-image {
@@ -72,10 +101,11 @@
   background-position: center;
 }
 
-.story-card h3 {
-  font-size: 18px;
+.story-card h1 {
+  font-size: 28px;
   margin: 10px 0;
   color: #f7f2f2;
+
 }
 
 .story-card p {
@@ -106,16 +136,22 @@
   .stories-grid {
     grid-template-columns: 1fr;
   }
-
-  .category-card {
-    width: 100%;
-    text-align: center;
-    margin: 10px 0;
+  .category-section {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
   }
 
-  .story-card h3 {
-    font-size: 16px;
-    color: #f7f2f2;
+  .category-card {
+    height: 5vh; 
+    width:20vw;
+    margin: 5px;
+    position:relative; /* Reduced margin for smaller screens */
+  }
+
+  .category-card h3 {
+    font-size: 1.2rem; /* Smaller font size for mobile */
   }
 }
 /* Center 'No stories found' message */
@@ -129,7 +165,7 @@
 
 .no-stories-container p {
   font-size: 20px;
-  color: #f7f2f2;
+  color: #111111b6;
 }
 
 /* Center 'See More' button */
@@ -154,4 +190,28 @@
 
 .see-more-btn:hover {
   background-color: #ff4949; /* Darker shade on hover */
+}
+.loading-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

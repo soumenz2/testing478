@@ -1,25 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import HomePage from './pages/HomePage/Homepage';  // Your HomePage component
-import StoryDetailModal from './pages/modalPage/storyDetailsModal';  // Your StoryDetailPage component
-import Navbar from './pages/navbar/navbar';  // Your Navbar component
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage/Homepage'; // Your HomePage component
+import StoryDetailModal from './pages/modalPage/storyDetailsModal'; // Your StoryDetailPage component
+import Navbar from './pages/navbar/navbar'; // Your Navbar component
+import BookmarkPage from './pages/bookmarkPage/BookmarkPage';
 // App component
 function App() {
-  const location = useLocation();  // Get the current path
-
-  // Check if the current path is for story details
-  const isStoryDetailPage = location.pathname.startsWith('/story/');
-
   return (
     <div className="App">
-      {/* Conditionally render the Navbar based on the current path */}
-      {!isStoryDetailPage && <Navbar />}  
+      <Navbar />  {/* Navbar is rendered for all pages */}
       
       <Routes>
         {/* Define the routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/story/:storyID" element={<StoryDetailModal />} />
+        <Route path="/bookmarks" element={<BookmarkPage />} /> 
       </Routes>
     </div>
   );

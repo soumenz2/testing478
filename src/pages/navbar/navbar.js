@@ -5,6 +5,7 @@ import LoginModal from '../modalPage/login';
 import CreateStoryModal from '../modalPage/createStoryModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearUserId } from '../../redux/userslice';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
@@ -53,7 +54,9 @@ const Navbar = () => {
                 <p>{userIDfromREdux}</p> {/* Display username */}
               </div>
             </div>
+            <Link to="/bookmarks">
             <button className="btn-bookmarks">Bookmarks</button>
+          </Link>
             <button className="btn-add-story" onClick={openCreateSoryModal}>Add story</button>
             <div className="profile-dropdown">
               <button className="btn-logout" onClick={handleLogout}>

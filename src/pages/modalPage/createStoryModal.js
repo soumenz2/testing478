@@ -5,7 +5,7 @@ import API_BASE_URL from '../../config/config';
 import axios from 'axios';
 
 
-const CreateStoryModal = ({ isOpen, onClose }) => {
+const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
     const userIDfromREdux = useSelector((state) => state.user.userId);
   const [slides, setSlides] = useState([
     { heading: '', description: '', image: '', category: '' },
@@ -108,6 +108,7 @@ const CreateStoryModal = ({ isOpen, onClose }) => {
           };
         const response = await axios.post(`${API_BASE_URL}/createStoryWithSlide`, storyData);
         console.log('Story created successfully:', response.data.data);
+         onStoryCreated();
         onClose();
       } catch (error) {
         console.error('Error creating story:', error);
@@ -116,7 +117,7 @@ const CreateStoryModal = ({ isOpen, onClose }) => {
     } else {
       alert('Please fill all fields before submitting.');
     }
-  }, [allFieldsFilled, slides, onClose, userIDfromREdux]);
+  }, [allFieldsFilled, slides, onClose, userIDfromREdux,onStoryCreated]);
   
 
   if (!isOpen) return null;

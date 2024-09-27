@@ -5,144 +5,138 @@ import API_BASE_URL from '../../config/config';
 import axios from 'axios';
 
 
-const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
-    const userIDfromREdux = useSelector((state) => state.user.userId);
-  const [slides, setSlides] = useState([
+const CreateStoryModal = ( { isOpen, onClose, onStoryCreated } ) => {
+  const userIDfromREdux = useSelector( ( state ) => state.user.userId );
+  const [slides, setSlides] = useState( [
     { heading: '', description: '', image: '', category: '' },
     { heading: '', description: '', image: '', category: '' },
     { heading: '', description: '', image: '', category: '' },
-  ]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [videoDurationError, setVideoDurationError] = useState(null);
+  ] );
+  const [currentSlide, setCurrentSlide] = useState( 0 );
+  const [videoDurationError, setVideoDurationError] = useState( null );
   const maxSlides = 6;
 
   const handleInputChange = useCallback(
-    (e, index, field) => {
+    ( e, index, field ) => {
       const updatedSlides = [...slides];
       updatedSlides[index][field] = e.target.value;
-      setSlides(updatedSlides);
+      setSlides( updatedSlides );
 
       // If field is "image", check if it's a video and validate the duration
-      if (field === 'image' && isVideoURL(e.target.value)) {
-        validateVideoDuration(e.target.value);
+      if ( field === 'image' && isVideoURL( e.target.value ) ) {
+        validateVideoDuration( e.target.value );
       } else {
-        setVideoDurationError(null); // Clear any previous video duration error
+        setVideoDurationError( null ); // Clear any previous video duration error
       }
     },
     [slides]
   );
 
-  const isVideoURL = (url) => {
+  const isVideoURL = ( url ) => {
     // Simple check based on file extensions (you can refine this if needed)
-    return /\.(mp4|webm|ogg)$/i.test(url);
+    return /\.(mp4|webm|ogg)$/i.test( url );
   };
 
-  const validateVideoDuration = (videoURL) => {
-    const video = document.createElement('video');
+  const validateVideoDuration = ( videoURL ) => {
+    const video = document.createElement( 'video' );
     video.src = videoURL;
 
     video.onloadedmetadata = () => {
-      if (video.duration > 15) {
-        setVideoDurationError('Video duration exceeds 15 seconds.');
+      if ( video.duration > 15 ) {
+        setVideoDurationError( 'Video duration exceeds 15 seconds.' );
       } else {
-        setVideoDurationError(null);
+        setVideoDurationError( null );
       }
     };
 
     video.onerror = () => {
-      setVideoDurationError('Invalid video URL or unable to load video.');
+      setVideoDurationError( 'Invalid video URL or unable to load video.' );
     };
   };
 
-  const handleAddSlide = useCallback(() => {
-    if (slides.length < maxSlides) {
-      setSlides([...slides, { heading: '', description: '', image: '', category: '' }]);
+  const handleAddSlide = useCallback( () => {
+    if ( slides.length < maxSlides ) {
+      let slideLength = slides?.length
+      setSlides( [...slides, { heading: '', description: '', image: '', category: '' }] );
+      setCurrentSlide( slideLength )
     }
-  }, [slides]);
+  }, [slides] );
 
-  const handleRemoveSlide = useCallback((index) => {
-    if (slides.length > 3) {
-      const updatedSlides = slides.filter((_, idx) => idx !== index);
-      setSlides(updatedSlides);
-  
-      // Update currentSlide
-      if (index === slides.length - 1) {
-        // If the last slide is removed, set currentSlide to the new last slide
-        setCurrentSlide(updatedSlides.length - 1);
-      } else {
-        // If a middle slide is removed, adjust currentSlide as necessary
-        setCurrentSlide((prev) => (prev > index ? prev - 1 : prev));
-      }
+  const handleRemoveSlide = useCallback( ( index ) => {
+
+    setCurrentSlide( 0 )
+    const updatedSlides = slides.filter( ( _, idx ) => idx !== index );
+    setSlides( updatedSlides );
+    console.log( updatedSlides?.length - 1 )
+
+  }, [slides] );
+
+  const handlePrevious = useCallback( () => {
+    if ( currentSlide > 0 ) {
+      setCurrentSlide( currentSlide - 1 );
     }
-  }, [slides]);
+  }, [currentSlide] );
 
-  const handlePrevious = useCallback(() => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
+  const handleNext = useCallback( () => {
+    if ( currentSlide < slides.length - 1 ) {
+      setCurrentSlide( currentSlide + 1 );
     }
-  }, [currentSlide]);
+  }, [currentSlide, slides.length] );
 
-  const handleNext = useCallback(() => {
-    if (currentSlide < slides.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  }, [currentSlide, slides.length]);
-
-  const allFieldsFilled = useMemo(() => {
-    return slides.every(slide => slide.heading && slide.description && slide.image && slide.category);
-  }, [slides]);
+  const allFieldsFilled = useMemo( () => {
+    return slides.every( slide => slide.heading && slide.description && slide.image && slide.category );
+  }, [slides] );
 
 
-  const handleSubmit = useCallback(async () => {
-    if (allFieldsFilled) {
+  const handleSubmit = useCallback( async () => {
+    if ( allFieldsFilled ) {
       try {
-        console.log('Story Submitted:', slides);
+        console.log( 'Story Submitted:', slides );
         const storyData = {
-            userID: userIDfromREdux,
-            slides: slides.map(slide => ({
-              heading: slide.heading,
-              description: slide.description,
-              imageOrVideoURl: slide.image, // Adjusting property name to match the API requirement
-              category: slide.category,
-            })),
-          };
-        const response = await axios.post(`${API_BASE_URL}/createStoryWithSlide`, storyData);
-        console.log('Story created successfully:', response.data.data);
-         onStoryCreated();
+          userID: userIDfromREdux,
+          slides: slides.map( slide => ( {
+            heading: slide.heading,
+            description: slide.description,
+            imageOrVideoURl: slide.image, // Adjusting property name to match the API requirement
+            category: slide.category,
+          } ) ),
+        };
+        const response = await axios.post( `${ API_BASE_URL }/createStoryWithSlide`, storyData );
+        console.log( 'Story created successfully:', response.data.data );
+        onStoryCreated();
         onClose();
-      } catch (error) {
-        console.error('Error creating story:', error);
-        alert('An error occurred while creating the story. Please try again.');
+      } catch ( error ) {
+        console.error( 'Error creating story:', error );
+        alert( 'An error occurred while creating the story. Please try again.' );
       }
     } else {
-      alert('Please fill all fields before submitting.');
+      alert( 'Please fill all fields before submitting.' );
     }
-  }, [allFieldsFilled, slides, onClose, userIDfromREdux,onStoryCreated]);
-  
+  }, [allFieldsFilled, slides, onClose, userIDfromREdux, onStoryCreated] );
 
-  if (!isOpen) return null;
+
+  if ( !isOpen ) return null;
 
   return (
     <div className="modal">
       <div className="modal-content">
         <div className="slide-navigation1">
-          {slides.map((_, idx) => (
+          {slides.map( ( _, idx ) => (
             <button
               key={idx}
-              className={`slide-tab ${currentSlide === idx ? 'active' : ''}`}
-              onClick={() => setCurrentSlide(idx)}
+              className={`slide-tab ${ currentSlide === idx ? 'active' : '' }`}
+              onClick={() => setCurrentSlide( idx )}
             >
               Slide {idx + 1}
               {slides.length > 3 && idx === slides.length - 1 && (
-                <span className="remove-slide" onClick={() => handleRemoveSlide(idx)}>✖</span>
+                <span className="remove-slide" onClick={() => handleRemoveSlide( idx )}>✖</span>
               )}
             </button>
-          ))}
+          ) )}
           {slides.length < maxSlides && (
-            <button className="add-slide-btn" onClick={handleAddSlide}>Add +</button>
+            <button className="add-slide-btn" onClick={handleAddSlide}>{'Add + '}</button>
           )}
         </div>
-
         <div className="slide-form">
           {currentSlide < slides.length && (
             <>
@@ -150,8 +144,9 @@ const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
                 <label>Heading:</label>
                 <input
                   type="text"
+
                   value={slides[currentSlide]?.heading || ''}
-                  onChange={(e) => handleInputChange(e, currentSlide, 'heading')}
+                  onChange={( e ) => handleInputChange( e, currentSlide, 'heading' )}
                   placeholder="Your heading"
                   required
                 />
@@ -160,7 +155,7 @@ const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
                 <label>Description:</label>
                 <textarea
                   value={slides[currentSlide]?.description || ''}
-                  onChange={(e) => handleInputChange(e, currentSlide, 'description')}
+                  onChange={( e ) => handleInputChange( e, currentSlide, 'description' )}
                   placeholder="Story description"
                   required
                 />
@@ -170,7 +165,7 @@ const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
                 <input
                   type="text"
                   value={slides[currentSlide]?.image || ''}
-                  onChange={(e) => handleInputChange(e, currentSlide, 'image')}
+                  onChange={( e ) => handleInputChange( e, currentSlide, 'image' )}
                   placeholder="Add image/Video URL"
                   required
                 />
@@ -180,7 +175,7 @@ const CreateStoryModal = ({ isOpen, onClose,onStoryCreated }) => {
                 <label>Category:</label>
                 <select
                   value={slides[currentSlide]?.category || ''}
-                  onChange={(e) => handleInputChange(e, currentSlide, 'category')}
+                  onChange={( e ) => handleInputChange( e, currentSlide, 'category' )}
                   required
                 >
                   <option value="" disabled>Select category</option>

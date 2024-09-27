@@ -5,9 +5,10 @@
 
 .category-section {
   margin-bottom: 40px;
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
 }
+
 .category-section1 {
   margin-bottom: 40px;
 
@@ -22,49 +23,58 @@
 
 /* Category Cards */
 .category-card {
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-direction: row;
   margin: 10px;
   padding: 15px;
   border: 2px solid transparent;
-  justify-content: center; /* Horizontally center */
-  align-items: center; 
+  justify-content: center;
+  /* Horizontally center */
+  align-items: center;
   border-radius: 10px;
   cursor: pointer;
 
   box-shadow: 0 4px 12px rgba(12, 0, 0, 0.6);
-  height:15vh;
-  width:10vw;
+  height: 15vh;
+  width: 20vw;
   transition: transform 0.3s;
-  overflow: hidden;
+  /* overflow: hidden; */
   border-color: transparent;
-  
+
 }
+
 .category-card .background {
-  position: absolute; /* Position the background image absolutely */
+  position: absolute;
+  /* Position the background image absolutely */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-position: center; /* Center the image */
-  background-size: cover; /* Cover the entire card */
-  opacity: 0.9; /* Background opacity */
-  z-index: 0; /* Ensure it is below the text */
+  background-position: center;
+  /* Center the image */
+  background-size: cover;
+  /* Cover the entire card */
+  opacity: 0.9;
+  /* Background opacity */
+  z-index: 0;
+  /* Ensure it is below the text */
 }
+
 .category-card .overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 0; 
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
 }
 
 .category-card.active {
   border-color: #6f47ff;
-  box-shadow: 0 4px 12px rgba(24, 11, 212, 0.918); /* Highlight active category */
+  box-shadow: 0 4px 12px rgba(24, 11, 212, 0.918);
+  /* Highlight active category */
 }
 
 
@@ -73,14 +83,16 @@
   font-size: 32px;
   text-align: center;
   color: rgb(250, 252, 252);
-  position: relative; /* To ensure the text is above the background */
+  position: relative;
+  /* To ensure the text is above the background */
   z-index: 1;
 }
 
 /* Stories Grid for Desktop */
 .stories-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 stories per row on desktop */
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 stories per row on desktop */
   gap: 20px;
 }
 
@@ -132,10 +144,12 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+
   /* 1 story per row on mobile */
   .stories-grid {
     grid-template-columns: 1fr;
   }
+
   .category-section {
     margin-bottom: 40px;
     display: flex;
@@ -144,22 +158,26 @@
   }
 
   .category-card {
-    height: 5vh; 
-    width:20vw;
+    height: 15vh !important;
+    width: 20vw !important;
     margin: 5px;
-    position:relative; /* Reduced margin for smaller screens */
+    position: relative;
+    /* Reduced margin for smaller screens */
   }
 
   .category-card h3 {
-    font-size: 1.2rem; /* Smaller font size for mobile */
+    font-size: 1.2rem;
+    /* Smaller font size for mobile */
   }
 }
+
 /* Center 'No stories found' message */
 .no-stories-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh; /* Adjust to set vertical space */
+  height: 50vh;
+  /* Adjust to set vertical space */
   text-align: center;
 }
 
@@ -180,7 +198,8 @@
 .see-more-btn {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #ff6b6b; /* Example button color */
+  background-color: #ff6b6b;
+  /* Example button color */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -189,8 +208,10 @@
 }
 
 .see-more-btn:hover {
-  background-color: #ff4949; /* Darker shade on hover */
+  background-color: #ff4949;
+  /* Darker shade on hover */
 }
+
 .loading-container {
   position: fixed;
   top: 50%;
@@ -200,6 +221,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .spinner {
@@ -212,6 +236,21 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.story-modal-home-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
 }

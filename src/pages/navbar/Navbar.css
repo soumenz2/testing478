@@ -1,7 +1,9 @@
 /* Common navbar styling */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: flex-end;
+  align-items: flex-end;
   align-items: center;
   padding: 1rem;
   background-color: white;
@@ -44,7 +46,8 @@
     position: absolute;
     top: 60px; /* Adjust to ensure it doesn't overlap */
     left: 0;
-    width: 100%;
+    /* width: 100%; */
+    width: 95%;
     background-color: white;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -75,7 +78,8 @@
   }
 
   .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
-    width: 100%;
+    /* width: 100%; */
+    width: 30%;
     margin-bottom: 1rem;
   }
 
@@ -84,7 +88,23 @@
     font-size: 1.5rem;
     cursor: pointer;
   }
+
+  .menu-icon-cross.active{
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: grid;
+        align-self: flex-end;
+        margin-right: 5px;
+      }
+      .menu-icon-cross{
+        display: none;
+      }
 }
+
+.menu-icon-cross{
+    display: none;
+   }
 
 /* Hide hamburger icon on larger screens */
 @media only screen and (min-width: 769px) {

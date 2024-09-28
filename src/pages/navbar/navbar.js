@@ -91,7 +91,7 @@ const Navbar = () => {
             <div className="username-box">
               <p>username</p>
               <div className="profile-dropdown">
-                <button className="btn-logout" onClick={handleLogout}>
+                <button className="btn-logout logout2" onClick={handleLogout}>
                   Logout
                 </button>
               </div>

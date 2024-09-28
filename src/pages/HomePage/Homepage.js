@@ -29,19 +29,29 @@ const HomePage = () => {
   }, [selectedCategory] );
 
   const fetchStoryData = async ( category, limit = 4 ) => {
+    
     setLoading( true );
     try {
+      console.log("entered here")
+      
+      console.log('Loading started...');
       const response = await axios.get( `${ API_BASE_URL }/getStoryByCategory?category=${ category }&limit=${ limit }` );
+      
       if ( response.status === 200 ) {
+       
         const newData = response.data.data;
         setStoryData( newData );
+        console.log("data saved")
       } else {
         console.log( 'Error fetching data:', response.data.message );
       }
     } catch ( error ) {
       console.error( 'Error fetching story data:', error );
+    }finally {
+      setLoading(false); 
+      console.log('Loading stopped...');
     }
-    setLoading( false );
+   
   };
 
   const handleStoryClick = ( storyId ) => {

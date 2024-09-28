@@ -8,19 +8,26 @@ import { FaShare, FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from "react-i
 import { MdOutlineFileDownload } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
+import LoginModal from './login';
+
 
 const StoryDetailModal = ( props ) => {
   const [story, setStory] = useState( null );
   const [slides, setSlides] = useState( [] );
   const [currentSlide, setCurrentSlide] = useState( 0 );
   const [progress, setProgress] = useState( 0 );
-  const [isBookmarked, setIsBookmarked] = useState( false ); // Bookmark state
-  const [isLiked, setIsLiked] = useState( false ); // Like state
-  let { storyID } = useParams(); // Capture storyID from URL
+  const [isBookmarked, setIsBookmarked] = useState( false ); 
+  const [isLiked, setIsLiked] = useState( false );
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const userIDfromREdux = useSelector((state) => state.user.userId);
+
+  let { storyID } = useParams(); 
   const navigate = useNavigate();
   const location = useLocation();
-  const defaultImageTime = 5000; // Time in milliseconds for images
-  const defaultVideoTime = 15000; // Max time in milliseconds for videos
+  const defaultImageTime = 5000; 
+  const defaultVideoTime = 15000; 
 
  
 
@@ -142,6 +149,42 @@ const StoryDetailModal = ( props ) => {
     exit: { opacity: 0, x: -300 },
   };
 
+  const handleLikeToggle = async () => {
+    if (!userIDfromREdux) {
+      
+      setIsLoginOpen(true);
+      return;
+    }
+    try {
+      if (isLiked) {
+        // Unlike the slide
+        const response= await axios.post(`${API_BASE_URL}/unlikeSlides`, { slideID: slides[currentSlide].slideID,userID :userIDfromREdux });
+        if ( response.status === 200 ) {
+          setIsLiked(false);
+          setLikeCount((prevCount) => prevCount - 1);
+        } else {
+          console.log( 'Error fetching like slides' );
+        }
+        
+       
+      } else {
+        // Like the slide
+        const response= await axios.post(`${API_BASE_URL}/likeslides`, { slideID: slides[currentSlide].slideID,userID: userIDfromREdux });
+        if ( response.status === 200 ) {
+          setIsLiked(true);
+          setLikeCount((prevCount) => prevCount + 1);
+        } else {
+          console.log( 'Error fetching Unlike slides' );
+        }
+        
+      }
+    } catch (error) {
+      console.error('Error updating like status:', error);
+    }
+  };
+
+  const closeLoginModal = () => setIsLoginOpen(false);
+
   if ( slides.length === 0 ) {
     return <div>Loading slides...</div>;
   }
@@ -216,7 +259,7 @@ const StoryDetailModal = ( props ) => {
 
                       <button
                         className="like-button"
-                        onClick={toggleLike}
+                        onClick={handleLikeToggle} 
                         style={{ color: isLiked ? 'red' : 'black' }}
                       >
                         {isLiked ? <FaHeart /> : <FaRegHeart />}
@@ -243,6 +286,13 @@ const StoryDetailModal = ( props ) => {
           </div>
         </div>
       </div>
+      {isLoginOpen && (
+        <LoginModal
+          isOpen={isLoginOpen}
+          onClose={closeLoginModal}
+          
+        />
+      )}
     </div>
   );
 };

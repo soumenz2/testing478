@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearUserId } from "../../redux/userslice";
 import { Link } from "react-router-dom";
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
   const [isLoginOpen, setIsLoginOpen] = useState(false);

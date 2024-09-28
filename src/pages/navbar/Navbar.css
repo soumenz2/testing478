@@ -127,8 +127,15 @@
   }
 
   #p1 {
-    display: block;
-  }
+    
+      display: flex;
+      align-items: center;
+    }
+    
+    .profile-info {
+      display: inline-block;
+      margin-left: 10px;
+    }
 
   #p2 {
     display: none;
@@ -140,11 +147,15 @@
     display: block !important;
   }
 
+  .username-box{
+    display: none !important;
+  }
+
 
 
   .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
     /* width: 100%; */
-    width: 20%;
+    width: 30%;
     margin-bottom: 1rem;
   }
 

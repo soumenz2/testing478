@@ -13,7 +13,8 @@
 .navbar-options {
   display: flex;
   align-items: center;
-  gap: 20px; /* Adjust spacing between items */
+  gap: 20px;
+  /* Adjust spacing between items */
 }
 
 .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
@@ -38,13 +39,64 @@
   margin-right: 1rem;
 }
 
+#p1 {
+  display: none;
+}
+
+.btn-bookmarks a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.profile-dropdown .btn-logout {
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  background-color: #f88a8a;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout2{
+  margin-left: 15px;
+}
+
+.username-box {
+  position: absolute;
+  top: 97px;
+  right: 0px;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: none;
+  width: 20%;
+  text-align: center;
+}
+
+.username-box.show {
+  display: block;
+}
+
+#logoutHide{
+  display: none;
+}
+
+
+
+
 /* Mobile view */
 @media only screen and (max-width: 768px) {
   .navbar-options {
-    display: none; /* Hide options by default */
+    display: none;
+    /* Hide options by default */
     flex-direction: column;
     position: absolute;
-    top: 60px; /* Adjust to ensure it doesn't overlap */
+    top: 60px;
+    /* Adjust to ensure it doesn't overlap */
     left: 0;
     /* width: 100%; */
     width: 95%;
@@ -55,12 +107,15 @@
   }
 
   .navbar-options.active {
-    display: flex; /* Show options when the menu is active */
+    display: flex;
+    /* Show options when the menu is active */
   }
+
+
 
   .user-profile {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 1rem;
     /* Ensure profile is at the top */
@@ -70,12 +125,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: auto; /* Push logout button to the bottom */
+    margin-bottom: auto;
+    padding: 9px;
+    /* Push logout button to the bottom */
+  }
+
+  #p1 {
+    
+      display: flex;
+      align-items: center;
+    }
+
+  #p2 {
+    display: none;
   }
 
   .profile-dropdown {
-    margin-top: auto; /* Push logout button to the bottom */
+    margin-top: auto;
+    /* Push logout button to the bottom */
+    display: block !important;
   }
+
+  .username-box{
+    display: none !important;
+  }
+
+
 
   .btn-register, .btn-signin, .btn-bookmarks, .btn-add-story {
     /* width: 100%; */
@@ -84,27 +159,35 @@
   }
 
   .menu-icon {
-    display: block; /* Show the hamburger icon on mobile */
+    display: block;
+    /* Show the hamburger icon on mobile */
     font-size: 1.5rem;
     cursor: pointer;
   }
 
-  .menu-icon-cross.active{
-        display: block;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: grid;
-        align-self: flex-end;
-        margin-right: 5px;
-      }
-      .menu-icon-cross{
-        display: none;
-      }
+  .menu-icon-cross.active {
+    display: block;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: grid;
+    align-self: flex-end;
+    margin-right: 5px;
+  }
+
+  .menu-icon-cross {
+    display: none;
+  }
+
+  /* .profile-dropdown .btn-logout{
+    width: 20%;
+  } */
+
+
 }
 
-.menu-icon-cross{
-    display: none;
-   }
+.menu-icon-cross {
+  display: none;
+}
 
 /* Hide hamburger icon on larger screens */
 @media only screen and (min-width: 769px) {

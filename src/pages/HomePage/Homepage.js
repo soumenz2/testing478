@@ -4,6 +4,8 @@ import API_BASE_URL from '../../config/config';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StoryDetailModal from '../modalPage/storyDetailsModal';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
   const [storyData, setStoryData] = useState( [] );
@@ -13,10 +15,6 @@ const HomePage = () => {
   const [selectedSlideIndex, setSelectedSlideIndex] = useState( 0 );
   const [loading, setLoading] = useState( false ); // Add loading state
   const categoryList = [
-    { name: 'All', image: 'https://cdn.pixabay.com/photo/2014/07/02/08/30/images-381937_960_720.jpg' },
-    { name: 'Music', image: 'https://cdn.pixabay.com/photo/2024/02/02/22/05/audio-8549150_1280.jpg' },
-    { name: 'Movies', image: 'https://cdn.pixabay.com/photo/2023/11/14/15/46/nikon-8388022_1280.jpg' },
-    { name: 'World', image: 'https://cdn.pixabay.com/photo/2012/01/09/09/59/earth-11595_1280.jpg' },
     { name: 'All', image: 'https://cdn.pixabay.com/photo/2014/07/02/08/30/images-381937_960_720.jpg' },
     { name: 'Music', image: 'https://cdn.pixabay.com/photo/2024/02/02/22/05/audio-8549150_1280.jpg' },
     { name: 'Movies', image: 'https://cdn.pixabay.com/photo/2023/11/14/15/46/nikon-8388022_1280.jpg' },
@@ -72,6 +70,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
+      <ToastContainer />
       <div className="category-section">
         {categoryList.map( ( category, index ) => (
           <div
@@ -81,7 +80,7 @@ const HomePage = () => {
           >
             <div
               className="background"
-              style={{ backgroundImage: `url(${ category.image })` }}
+              style={{ backgroundImage: `url(${ category.image })`, borderRadius: '25px', backgroundSize: 'cover', }}
             />
             <h3>{category.name}</h3>
           </div>

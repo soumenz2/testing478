@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import API_BASE_URL from '../../config/config';
 import { FaShare, FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const StoryDetailModal = ( props ) => {
   const [story, setStory] = useState( null );
@@ -20,10 +22,10 @@ const StoryDetailModal = ( props ) => {
   const defaultImageTime = 5000; // Time in milliseconds for images
   const defaultVideoTime = 15000; // Max time in milliseconds for videos
 
+ 
 
 
-
-  if ( storyID == undefined ) {
+  if ( storyID === undefined ) {
     storyID = props?.storyID
   }
 
@@ -74,7 +76,11 @@ const StoryDetailModal = ( props ) => {
     const currentSlideData = slides[currentSlide];
     console.log( "video duration", currentSlideData.videoDuration )
     const isVideo = currentSlideData.imageOrVideoURl.endsWith( '.mp4' );
-    const slideDuration = isVideo ? Math.min( currentSlideData.videoDuration || defaultVideoTime, defaultVideoTime ) : defaultImageTime;
+    const video = document.createElement( 'video' );
+    video.src = currentSlideData.imageOrVideoURl;
+    console.log("video source",video.src)
+    console.log( "video duration2",  video.duration )
+    const slideDuration = isVideo ? defaultVideoTime  : defaultImageTime;
 
     const progressInterval = setInterval( () => {
       setProgress( ( prev ) => {
@@ -115,7 +121,7 @@ const StoryDetailModal = ( props ) => {
     const url = `${ window.location.origin }/story/${ storyID }?slideIndex=${ currentSlide }`;
     navigator.clipboard.writeText( url )
       .then( () => {
-        alert( 'Story URL copied to clipboard!' );
+        toast.success('Story URL copied to clipboard!')
       } )
       .catch( err => {
         console.error( 'Could not copy URL: ', err );
@@ -142,6 +148,7 @@ const StoryDetailModal = ( props ) => {
 
   return (
     <div className="modal-overlay">
+      <ToastContainer/>
       <div className="modal-content">
         {/* Story Header with Progress Bar */}
         <div className="story-header">

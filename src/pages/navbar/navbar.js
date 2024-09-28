@@ -32,6 +32,15 @@ const Navbar = () => {
     setIsMenuOpen(false); // Close menu on logout
   };
 
+  const handleUserProfileClick = () => {
+    const usernameBox = document.querySelector(".username-box");
+    if (usernameBox.classList.contains("show")) {
+      usernameBox.classList.remove("show");
+    } else {
+      usernameBox.classList.add("show");
+    }
+  };
+
   return (
     <nav className="navbar">
       {/* Hamburger Menu for mobile view */}
@@ -43,26 +52,49 @@ const Navbar = () => {
       <div className={`navbar-options ${isMenuOpen ? "active" : ""}`}>
         {userIDfromREdux ? (
           <>
-            <div className="user-profile">
+            <div className="user-profile" id="p1">
               <img
                 src="https://via.placeholder.com/40"
                 alt="User Profile"
                 onError={(e) => (e.target.src = "default-profile-pic.png")} // Fallback image
               />
-              <div className="profile-info">
-                <p>{userIDfromREdux}</p> {/* Display username */}
-              </div>
+              <span className="profile-info">
+                {/* <p>{userIDfromREdux}</p> */}UserName
+              </span>
             </div>
-            <Link to="/bookmarks">
-              <button className="btn-bookmarks">Bookmarks</button>
-            </Link>
+
+            <button className="btn-bookmarks">
+              <Link to="/bookmarks">Bookmarks</Link>
+            </button>
+
             <button className="btn-add-story" onClick={openCreateSoryModal}>
               Add story
             </button>
-            <div className="profile-dropdown">
+            <div className="profile-dropdown" id="logoutHide">
               <button className="btn-logout" onClick={handleLogout}>
                 Logout
               </button>
+            </div>
+
+            <div className="user-profile" id="p2">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="User Profile"
+                onError={(e) => (e.target.src = "default-profile-pic.png")} // Fallback image
+                onClick={handleUserProfileClick}
+              />
+              <div className="profile-info">
+                {/* <p>{userIDfromREdux}</p> */}
+              </div>
+            </div>
+
+            <div className="username-box">
+              <p>username</p>
+              <div className="profile-dropdown">
+                <button className="btn-logout" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
             </div>
           </>
         ) : (

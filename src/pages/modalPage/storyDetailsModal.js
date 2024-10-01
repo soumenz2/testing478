@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './StoryDetailModal.css';
 import axios from 'axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
@@ -17,21 +17,21 @@ const StoryDetailModal = ( props ) => {
   const [slides, setSlides] = useState( [] );
   const [currentSlide, setCurrentSlide] = useState( 0 );
   const [progress, setProgress] = useState( 0 );
-  const [isBookmarked, setIsBookmarked] = useState( false ); 
+  const [isBookmarked, setIsBookmarked] = useState( false );
   const [isLiked, setIsLiked] = useState( false );
-  const [likeCount, setLikeCount] = useState(0);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const userIDfromREdux = useSelector((state) => state.user.userId);
-  const [isLoading, setIsLoading] = useState(true);
+  const [likeCount, setLikeCount] = useState( 0 );
+  const [isLoginOpen, setIsLoginOpen] = useState( false );
+  const [isMenuOpen, setIsMenuOpen] = useState( false );
+  const userIDfromREdux = useSelector( ( state ) => state.user.userId );
+  const [isLoading, setIsLoading] = useState( true );
 
-  let { storyID } = useParams(); 
+  let { storyID } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const defaultImageTime = 5000; 
-  const defaultVideoTime = 15000; 
+  const defaultImageTime = 5000;
+  const defaultVideoTime = 15000;
 
- 
+
 
 
   if ( storyID === undefined ) {
@@ -42,7 +42,7 @@ const StoryDetailModal = ( props ) => {
 
   const fetchStoryDetails = async () => {
     try {
-      setIsLoading(true); 
+      setIsLoading( true );
       const response = await axios.get( `${ API_BASE_URL }/getStorybyId?storyID=${ storyID }` );
       if ( response.status === 200 ) {
         setStory( response?.data );
@@ -52,8 +52,8 @@ const StoryDetailModal = ( props ) => {
       }
     } catch ( error ) {
       console.log( 'Error fetching story:', error );
-    }finally {
-      setIsLoading(false);
+    } finally {
+      setIsLoading( false );
     }
   };
 
@@ -90,9 +90,9 @@ const StoryDetailModal = ( props ) => {
     const isVideo = currentSlideData.imageOrVideoURl.endsWith( '.mp4' );
     const video = document.createElement( 'video' );
     video.src = currentSlideData.imageOrVideoURl;
-    console.log("video source",video.src)
-    console.log( "video duration2",  video.duration )
-    const slideDuration = isVideo ? defaultVideoTime  : defaultImageTime;
+    console.log( "video source", video.src )
+    console.log( "video duration2", video.duration )
+    const slideDuration = isVideo ? defaultVideoTime : defaultImageTime;
 
     const progressInterval = setInterval( () => {
       setProgress( ( prev ) => {
@@ -133,17 +133,17 @@ const StoryDetailModal = ( props ) => {
     const url = `${ window.location.origin }/story/${ storyID }?slideIndex=${ currentSlide }`;
     navigator.clipboard.writeText( url )
       .then( () => {
-        toast.success('Story URL copied to clipboard!')
+        toast.success( 'Story URL copied to clipboard!' )
       } )
       .catch( err => {
         console.error( 'Could not copy URL: ', err );
       } );
   };
 
-  const toggleBookmark = async() => {
-    if (!userIDfromREdux) {
-      
-      setIsLoginOpen(true);
+  const toggleBookmark = async () => {
+    if ( !userIDfromREdux ) {
+
+      setIsLoginOpen( true );
       return;
     }
     try {
@@ -151,39 +151,39 @@ const StoryDetailModal = ( props ) => {
         slideID: slides[currentSlide].slideID,
         userID: userIDfromREdux,
       };
-      console.log(payload)
-      if (isLiked) {
-      
-      
-        const response= await axios.post(`${API_BASE_URL}/bookmarklides`,payload);
+      console.log( payload )
+      if ( isLiked ) {
+
+
+        const response = await axios.post( `${ API_BASE_URL }/bookmarklides`, payload );
         if ( response.status === 200 ) {
-          setIsBookmarked(false)
+          setIsBookmarked( false )
         } else {
           console.log( 'Error fetching like slides' );
         }
-        
-       
+
+
       } else {
         // Like the slide
-        console.log("payload:",payload)
-        const response= await axios.post(`${API_BASE_URL}/undoBookmarkSlides`, payload);
+        console.log( "payload:", payload )
+        const response = await axios.post( `${ API_BASE_URL }/undoBookmarkSlides`, payload );
         if ( response.status === 200 ) {
-         setIsBookmarked(true)
-         
-          
+          setIsBookmarked( true )
+
+
         } else {
           console.log( 'Error fetching Unlike slides' );
         }
-        
+
       }
-    } catch (error) {
-      console.error('Error updating like status:', error);
+    } catch ( error ) {
+      console.error( 'Error updating like status:', error );
     }
   };
 
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen( !isMenuOpen );
   };
 
   const slideVariants = {
@@ -191,59 +191,59 @@ const StoryDetailModal = ( props ) => {
     visible: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: -300 },
   };
-  const checkIfLiked = useCallback(async () => {
+  const checkIfLiked = useCallback( async () => {
     try {
       const slideID = slides[currentSlide]?.slideID;
 
-      if (!slideID) return; // Ensure slideID is valid before proceeding
+      if ( !slideID ) return; // Ensure slideID is valid before proceeding
 
       // Fetch whether the slide is liked by the user
-      const response = await axios.get(`${API_BASE_URL}/isLikedslides?slideID=${slideID}&userID=${userIDfromREdux}`);
+      const response = await axios.get( `${ API_BASE_URL }/isLikedslides?slideID=${ slideID }&userID=${ userIDfromREdux }` );
 
-      if (response.status === 200) {
+      if ( response.status === 200 ) {
         const { isLiked } = response.data;
-        setIsLiked(isLiked);
+        setIsLiked( isLiked );
       } else {
-        console.log('Error checking like status');
+        console.log( 'Error checking like status' );
       }
-    } catch (error) {
-      console.error('Error checking like status:', error);
+    } catch ( error ) {
+      console.error( 'Error checking like status:', error );
     }
-  }, [slides, currentSlide, userIDfromREdux]);
-  const checkIsBookmarked = useCallback(async (callback) => {
+  }, [slides, currentSlide, userIDfromREdux] );
+  const checkIsBookmarked = useCallback( async ( callback ) => {
     try {
       const slideID = slides[currentSlide]?.slideID;
 
-      if (!slideID) return; // Guard clause in case there's no valid slideID
+      if ( !slideID ) return; // Guard clause in case there's no valid slideID
 
       // Fetch whether the slide is bookmarked by the user
-      const response = await axios.get(`${API_BASE_URL}/isbookmarked?slideID=${slideID}&userID=${userIDfromREdux}`);
+      const response = await axios.get( `${ API_BASE_URL }/isbookmarked?slideID=${ slideID }&userID=${ userIDfromREdux }` );
 
-      if (response.status === 200) {
+      if ( response.status === 200 ) {
         const { isBookmarked } = response.data;
-        setIsBookmarked(isBookmarked);
+        setIsBookmarked( isBookmarked );
 
         // Execute callback if provided
-        if (callback && typeof callback === 'function') {
-          callback(isBookmarked);
+        if ( callback && typeof callback === 'function' ) {
+          callback( isBookmarked );
         }
       } else {
-        console.log('Error checking bookmark status');
+        console.log( 'Error checking bookmark status' );
       }
-    } catch (error) {
-      console.error('Error checking bookmark status:', error);
+    } catch ( error ) {
+      console.error( 'Error checking bookmark status:', error );
     }
-  }, [slides, currentSlide, userIDfromREdux]);
-  useEffect(() => {
-    if (slides.length > 0) {
+  }, [slides, currentSlide, userIDfromREdux] );
+  useEffect( () => {
+    if ( slides.length > 0 ) {
       checkIfLiked();
       checkIsBookmarked()
     }
-  }, [currentSlide, slides,checkIfLiked,checkIsBookmarked]);
+  }, [currentSlide, slides, checkIfLiked, checkIsBookmarked] );
   const handleLikeToggle = async () => {
-    if (!userIDfromREdux) {
-      
-      setIsLoginOpen(true);
+    if ( !userIDfromREdux ) {
+
+      setIsLoginOpen( true );
       return;
     }
     try {
@@ -251,78 +251,78 @@ const StoryDetailModal = ( props ) => {
         slideID: slides[currentSlide].slideID,
         userID: userIDfromREdux,
       };
-      console.log(payload)
-      if (isLiked) {
-      
-      
-        const response= await axios.post(`${API_BASE_URL}/unlikeSlides`,payload);
+      console.log( payload )
+      if ( isLiked ) {
+
+
+        const response = await axios.post( `${ API_BASE_URL }/unlikeSlides`, payload );
         if ( response.status === 200 ) {
-          setIsLiked(false);
-          setLikeCount((prevCount) => prevCount - 1);
+          setIsLiked( false );
+          setLikeCount( ( prevCount ) => prevCount - 1 );
         } else {
           console.log( 'Error fetching like slides' );
         }
-        
-       
+
+
       } else {
         // Like the slide
-        console.log("payload:",payload)
-        const response= await axios.post(`${API_BASE_URL}/likeslides`, payload);
+        console.log( "payload:", payload )
+        const response = await axios.post( `${ API_BASE_URL }/likeslides`, payload );
         if ( response.status === 200 ) {
-          setIsLiked(true);
-          setTimeout(() => {
-            setLikeCount((prevCount) => prevCount + 1);
-           },1000);
-         
-          
+          setIsLiked( true );
+          setTimeout( () => {
+            setLikeCount( ( prevCount ) => prevCount + 1 );
+          }, 1000 );
+
+
         } else {
           console.log( 'Error fetching Unlike slides' );
         }
-        
+
       }
-    } catch (error) {
-      console.error('Error updating like status:', error);
+    } catch ( error ) {
+      console.error( 'Error updating like status:', error );
     }
   };
 
-  const closeLoginModal = () => setIsLoginOpen(false);
+  const closeLoginModal = () => setIsLoginOpen( false );
 
   if ( slides.length === 0 ) {
     <div className="loading-container">
-    <div className="spinner"></div> {/* This will be your loader */}
-  </div>
+      <div className="spinner"></div> {/* This will be your loader */}
+    </div>
   }
   const handleDownload = () => {
-    if (slides.length > 0) {
+    if ( slides.length > 0 ) {
       const currentMedia = slides[currentSlide].imageOrVideoURl;
-      const fileName = `slidemedia_${currentSlide + 1}${currentMedia.endsWith('.mp4') ? '.mp4' : '.jpg'}`; // Adjust the extension based on the media type
-  
-      fetch(currentMedia)
-        .then(response => response.blob())
-        .then(blob => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
+      const fileName = `slidemedia_${ currentSlide + 1 }${ currentMedia.endsWith( '.mp4' ) ? '.mp4' : '.jpg' }`; // Adjust the extension based on the media type
+
+      fetch( currentMedia )
+        .then( response => response.blob() )
+        .then( blob => {
+          const url = URL.createObjectURL( blob );
+          const link = document.createElement( 'a' );
           link.href = url;
           link.download = fileName;
           link.click();
-          URL.revokeObjectURL(url);
-        });
+          URL.revokeObjectURL( url );
+        } );
     }
   };
-  if(isLoading ) return (
+  if ( isLoading ) return (
     <div className="loading-container">
       <div className="spinner"></div> {/* Add your spinner or loader design here */}
     </div>
-  ) 
+  )
 
   return (
     <div className="modal-overlay">
-      <ToastContainer/>
-      
-       
-         
-          <div className="modal-content1">
-                 <div className="story-header">
+      <ToastContainer />
+
+
+
+      <div className="modal-content1">
+        <div className="story-header">
           <div className="progress-indicator">
             {slides.map( ( _, index ) => (
               <div key={index} className="progress-bar">
@@ -367,32 +367,37 @@ const StoryDetailModal = ( props ) => {
                       />
                     ) : (
                       <img
+                        className='story-image'
                         src={slides[currentSlide].imageOrVideoURl}
                         alt={`Slide ${ currentSlide + 1 }`}
-                      />
+                      >
+
+                      </img>
                     )}
-                    <h2>{slides[currentSlide].heading}</h2>
-                    <p className='description-p'>{slides[currentSlide].description}</p>
+                    <div className='story-description-container'>
+                      <h2>{slides[currentSlide].heading}</h2>
+                      <p className='description-p'>{slides[currentSlide].description}</p>
 
-                    {/* Action buttons */}
-                    <div className="action-buttons">
-                      <button
-                        className="bookmark-button"
-                        onClick={toggleBookmark}
-                        style={{ color: isBookmarked ? 'blue' : 'black' }}
-                      >
-                        {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
-                      </button>
-                      <button className="download-button" onClick={handleDownload}><MdOutlineFileDownload /></button>
+                      {/* Action buttons */}
+                      <div className="action-buttons">
+                        <button
+                          className="bookmark-button"
+                          onClick={toggleBookmark}
+                          style={{ color: isBookmarked ? 'blue' : 'aliceblue' }}
+                        >
+                          {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
+                        </button>
+                        <button className="download-button" onClick={handleDownload}><MdOutlineFileDownload style={{ color: "aliceblue" }} /></button>
 
-                      <button
-                        className="like-button"
-                        onClick={handleLikeToggle} 
-                        style={{ color: isLiked ? 'red' : 'black' }}
-                      >
-                        {isLiked ? <FaHeart /> : <FaRegHeart />}
-                      </button>
-                      <div className="like-count">{slides[currentSlide].likeCount}</div> {/* Replace 0 with actual like count */}
+                        <button
+                          className="like-button"
+                          onClick={handleLikeToggle}
+                          style={{ color: isLiked ? 'red' : 'aliceblue' }}
+                        >
+                          {isLiked ? <FaHeart /> : <FaRegHeart />}
+                        </button>
+                        <div className="like-count" style={{ color: "aliceblue" }}>{slides[currentSlide].likeCount}</div> {/* Replace 0 with actual like count */}
+                      </div>
                     </div>
                   </>
                 )}
@@ -413,16 +418,16 @@ const StoryDetailModal = ( props ) => {
             </button>
           </div>
         </div>
-        </div>
-       
- 
-     
+      </div>
+
+
+
       {isLoginOpen && (
         <LoginModal
           isOpen={isLoginOpen}
           onClose={closeLoginModal}
           toggleMenu={toggleMenu}
-          
+
         />
       )}
     </div>

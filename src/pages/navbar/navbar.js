@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearUserId } from "../../redux/userslice";
 import { Link } from "react-router-dom";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu toggle state
@@ -44,6 +46,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+     
       {/* Hamburger Menu for mobile view */}
       <div className="menu-icon" onClick={toggleMenu}>
         <span>&#9776;</span> {/* Hamburger icon */}

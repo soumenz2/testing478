@@ -13,7 +13,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.modal-content1 {
   background-color: rgba(226, 217, 217, 0.9);
   color: white;
   width: 90%;
@@ -89,6 +89,13 @@
   border: none;
   color: white;
   cursor: pointer;
+}
+.description-p{
+  overflow: hidden;
+  display:-webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 
@@ -189,4 +196,26 @@ button:disabled {
   font-weight: bold; /* Make the number bold */
   transition: color 0.3s ease; /* Smooth transition for color change */
 }
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Full height of the modal */
+}
+
+.spinner {
+  border: 8px solid rgba(255, 255, 255, 0.2); /* Light color for the background */
+  border-top: 8px solid #3498db; /* Spinner color */
+  border-radius: 50%;
+  width: 50px; /* Spinner size */
+  height: 50px; /* Spinner size */
+  animation: spin 1s linear infinite; /* Spin animation */
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 

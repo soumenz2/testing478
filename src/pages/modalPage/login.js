@@ -41,10 +41,16 @@ const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
 
         localStorage.setItem('user', userId);
         dispatch(setUserId(userId));
-        
+        toast.success("Login Successfully !!!");
         // Close modal and navigate to dashboard or home after successful login
+      setTimeout(()=>{
         onClose();
+      },2000)
+          
         toggleMenu();
+ 
+         
+        
         // navigate('/dashboard');  // Adjust route as needed
 
       } catch (err) {
@@ -64,7 +70,7 @@ const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
 
   return (
     <div className="modal-overlay">
-       <ToastContainer />
+       <ToastContainer autoClose={3000}/>
       <div className="modal1">
         <button className="close-btn" onClick={onClose}>
           &#10006;

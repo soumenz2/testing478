@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(29, 28, 28, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,4 +163,86 @@ textarea {
 
 .close-modal:hover {
   color: #e85c50;
+}
+/* Mobile View */
+@media only screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .slide-navigation1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 80px;
+  }
+
+  .slide-tab {
+    margin-bottom: 10px;
+  }
+
+  .add-slide-btn {
+    margin-top: 10px;
+  }
+
+  .slide-form {
+    padding: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .navigation-buttons {
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+  }
+
+  .prev-btn, .next-btn {
+    margin-bottom: 10px;
+  }
+
+  .post-section {
+    text-align: center;
+  }
+
+  .close-modal {
+    top: 5px;
+    right: 5px;
+  }
+}
+
+/* Small Mobile View */
+@media only screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .slide-tab {
+    padding: 5px 10px;
+  }
+
+  .add-slide-btn {
+    padding: 5px 10px;
+  }
+
+  .slide-form input, .slide-form textarea {
+    padding: 5px;
+  }
+
+  .prev-btn, .next-btn {
+    padding: 5px 10px;
+  }
+
+  .post-btn {
+    padding: 5px 10px;
+  }
 }

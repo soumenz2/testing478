@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './BookmarkPage.css'; 
 import API_BASE_URL from '../../config/config'; 
+import { useSelector } from "react-redux";
 
 const BookmarkPage = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [expanded, setExpanded] = useState(false); 
-  const [loading, setLoading] = useState(true); // Loading state
-
+  const [loading, setLoading] = useState(true); 
+  const userIDfromREdux = useSelector((state) => state.user.userId);
+  
   useEffect(() => {
     // Fetch bookmarks when component mounts
     fetchBookmarks();
@@ -15,8 +17,8 @@ const BookmarkPage = () => {
 
   const fetchBookmarks = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/getBookmarks`); 
-      setBookmarks(response.data.bookmarks);
+      const response = await axios.get(`${API_BASE_URL}/getbookmarkbyId?userID=${userIDfromREdux}`); 
+      setBookmarks(response.data.data);
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
     } finally {
@@ -29,7 +31,28 @@ const BookmarkPage = () => {
   };
 
   // Get the first 4 bookmarks or all if expanded
-  const visibleBookmarks = expanded ? bookmarks : bookmarks.slice(0, 4);
+  const visibleBookmarks = bookmarks.slice(0, expanded ? bookmarks.length : 4); 
+
+  const renderMedia = (bookmark) => {
+    const isVideo = bookmark.imageOrVideoURl.endsWith('.mp4') || bookmark.imageOrVideoURl.endsWith('.mov'); // You can add other video formats if needed
+
+    if (isVideo) {
+      return (
+        <video controls className="bookmark-media">
+          <source src={bookmark.imageUrl} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    } else {
+      return (
+        <img
+          src={bookmark.imageOrVideoURl}
+          alt={bookmark.heading}
+          className="bookmark-media"
+        />
+      );
+    }
+  };
 
   return (
     <div className="bookmark-page">
@@ -42,24 +65,17 @@ const BookmarkPage = () => {
           <div className="bookmark-grid">
             {visibleBookmarks.map((bookmark, index) => (
               <div key={index} className="bookmark-card">
-                <img
-                  src={bookmark.imageUrl}
-                  alt={bookmark.heading}
-                  className="bookmark-image"
-                />
+                {renderMedia(bookmark)} {/* Conditionally render image or video */}
                 <h3>{bookmark.heading}</h3>
                 <p>{bookmark.description}</p>
               </div>
             ))}
           </div>
 
-          {/* Show 'See More' button only if there are more than 4 bookmarks */}
           {!expanded && bookmarks.length > 4 && (
-            <div className="see-more-container">
-              <button className="see-more-btn" onClick={handleSeeMore}>
-                See More
-              </button>
-            </div>
+            <button className="see-more-btn" onClick={handleSeeMore}>
+              See More
+            </button>
           )}
         </>
       )}

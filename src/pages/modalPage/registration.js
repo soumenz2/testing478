@@ -115,7 +115,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                 className="password-toggle" 
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? <FaEye />: <FaEyeSlash />}
+                {showPassword ?<FaEyeSlash /> : <FaEye /> }
               </span>
               
             </div>

@@ -128,7 +128,7 @@ const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
                 className="password-toggle" 
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? <FaEye />: <FaEyeSlash /> }
+                {showPassword ? <FaEyeSlash />: <FaEye /> }
               </span>
             </div>
           

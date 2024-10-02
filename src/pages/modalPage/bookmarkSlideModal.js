@@ -34,6 +34,7 @@ const SlideDetailModal = (props) => {
       const response = await axios.get(`${API_BASE_URL}/getBookmarkedSlide?slideID=${slideID}`);
       if (response.status === 200) {
         setSlide(response.data.data);
+        setLikeCount(response.data?.data?.likeCount)
       } else {
         console.log('Error fetching story details');
       }
@@ -222,6 +223,7 @@ const SlideDetailModal = (props) => {
   return (
     <div className="modal-overlay">
       <ToastContainer />
+     
       <div className="modal-content1">
         <div className="story-header">
           <div className="progress-bar">
@@ -234,6 +236,7 @@ const SlideDetailModal = (props) => {
         </div>
 
         <div className="story-slides-container">
+        <h1>{JSON.stringify(isLiked)}</h1>
           <AnimatePresence mode="wait">
             <motion.div
               initial="hidden"

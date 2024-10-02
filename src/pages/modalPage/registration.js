@@ -40,7 +40,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
         
         if ( response.status === 200 ) {
       
-          toast.success("Registration Successfully !!!");
+          //toast.success("Registration Successfully !!!");
           toast.success(response.data.message);
           // Close modal and navigate to dashboard or home after successful login
         setTimeout(()=>{

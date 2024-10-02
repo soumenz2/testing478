@@ -47,6 +47,7 @@ const StoryDetailModal = ( props ) => {
       if ( response.status === 200 ) {
         setStory( response?.data );
         setSlides( response?.data?.slides || [] );
+        setLikeCount(response?.data.slides[0].likeCount )
       } else {
         console.log( 'Error fetching story details' );
       }
@@ -110,6 +111,7 @@ const StoryDetailModal = ( props ) => {
 
   const handleNextSlide = () => {
     if ( slides.length > 0 && currentSlide < slides.length - 1 ) {
+      setLikeCount(slides[currentSlide+1].likeCount)
       setCurrentSlide( currentSlide + 1 );
     } else if ( currentSlide === slides.length - 1 ) {
       //handleClose();
@@ -118,6 +120,7 @@ const StoryDetailModal = ( props ) => {
 
   const handlePrevSlide = () => {
     if ( slides.length > 0 && currentSlide > 0 ) {
+      setLikeCount(slides[currentSlide-1].likeCount)
       setCurrentSlide( currentSlide - 1 );
     }
   };
@@ -152,11 +155,11 @@ const StoryDetailModal = ( props ) => {
         userID: userIDfromREdux,
       };
       console.log(payload)
-      if (isLiked) {
+      if (isBookmarked) {
       
-      
-        const response= await axios.post(`${API_BASE_URL}/bookmarklides`,payload);
+        const response= await axios.post(`${API_BASE_URL}/undoBookmarkSlides`,payload);
         if ( response.status === 200 ) {
+         
           setIsBookmarked(false)
         } else {
           console.log( 'Error fetching like slides' );
@@ -166,8 +169,9 @@ const StoryDetailModal = ( props ) => {
       } else {
         // Like the slide
         console.log("payload:",payload)
-        const response= await axios.post(`${API_BASE_URL}/undoBookmarkSlides`, payload);
+        const response= await axios.post(`${API_BASE_URL}/bookmarklides`, payload);
         if ( response.status === 200 ) {
+     
          setIsBookmarked(true)
          
           
@@ -270,9 +274,9 @@ const StoryDetailModal = ( props ) => {
         const response= await axios.post(`${API_BASE_URL}/likeslides`, payload);
         if ( response.status === 200 ) {
           setIsLiked(true);
-          setTimeout(() => {
+         
             setLikeCount((prevCount) => prevCount + 1);
-           },1000);
+          
          
           
         } else {
@@ -399,7 +403,7 @@ const handleDownload = () => {
                       >
                         {isLiked ? <FaHeart /> : <FaRegHeart />}
                       </button>
-                      <div className="like-count">{slides[currentSlide].likeCount}</div> 
+                      <div className="like-count">{likeCount}</div> 
                     </div>
                   </>
                 )}

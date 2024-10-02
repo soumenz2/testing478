@@ -295,12 +295,7 @@ const StoryDetailModal = ( props ) => {
 const handleDownload = () => {
   if (slides.length > 0) {
     const currentMedia = slides[currentSlide].imageOrVideoURl;
-    const fileName = `slidemedia_${currentSlide + 1}${currentMedia.endsWith('.mp4') ? '.mp4' : '.jpg'}`; // Adjust the extension based on the media type
-
-    // Display a loading indicator
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.textContent = 'Downloading...';
-    document.body.appendChild(loadingIndicator);
+    const fileName = `slidemedia_${currentSlide + 1}${currentMedia.endsWith('.mp4') ? '.mp4' : '.jpg'}`;
 
     fetch(currentMedia)
       .then(response => response.blob())
@@ -313,15 +308,14 @@ const handleDownload = () => {
         URL.revokeObjectURL(url);
 
         
-        document.body.removeChild(loadingIndicator);
+      
       })
       .catch(error => {
         console.error('Error downloading file:', error);
-        // Remove the loading indicator
-        document.body.removeChild(loadingIndicator);
       });
   }
 };
+
   if(isLoading ) return (
     <div className="loading-container">
       <div className="spinner"></div> {/* Add your spinner or loader design here */}

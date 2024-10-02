@@ -10,9 +10,11 @@ import { jwtDecode } from 'jwt-decode';  // No need for destructuring
 import API_BASE_URL from '../../config/config';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye,FaEyeSlash } from "react-icons/fa";
 
 const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,32 +33,47 @@ const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
+      setLoading(true);
       try {
         const response = await axios.post(`${API_BASE_URL}/login`, values);
-        const { token } = response.data;
+        const { token,msg } = response.data;
+        if ( response.status === 200 ) {
+          localStorage.setItem('token', token);
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken._id;
+  
+          localStorage.setItem('user', userId);
+          console.log(values.username)
+          sessionStorage.setItem('username', values.username);
+          sessionStorage.setItem('user', userId);
+          dispatch(setUserId(userId));
+          toast.success(msg);
+         
+        setTimeout(()=>{
+          onClose();
+          setLoading(false);
+        },2000)
+            
+          toggleMenu();
+        }
+       
 
-        localStorage.setItem('token', token);
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken._id;
 
-        localStorage.setItem('user', userId);
-        dispatch(setUserId(userId));
-        toast.success("Login Successfully !!!");
-        // Close modal and navigate to dashboard or home after successful login
-      setTimeout(()=>{
-        onClose();
-      },2000)
-          
-        toggleMenu();
  
          
         
         // navigate('/dashboard');  // Adjust route as needed
 
       } catch (err) {
-        console.error('Login failed', err);
-      
-        toast.error("Incorrect Username or Password");
+        if (err.response) {
+          const errorMessage = err.response.data.msg;
+          toast.error(errorMessage)
+          console.log(errorMessage);
+         
+        } else {
+          
+          toast.error("Login failed")
+        }
       }
     }
   });
@@ -111,7 +128,7 @@ const LoginModal = ({ isOpen, onClose,toggleMenu }) => {
                 className="password-toggle" 
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? <FaEye />: <FaEyeSlash /> }
               </span>
             </div>
           

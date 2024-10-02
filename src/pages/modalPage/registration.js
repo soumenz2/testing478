@@ -7,6 +7,8 @@ import  jwtDecode  from 'jwt-decode';  // No need for destructuring
 import API_BASE_URL from '../../config/config';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye,FaEyeSlash } from "react-icons/fa";
+
 
 const RegisterModal = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,22 +36,33 @@ const RegisterModal = ({ isOpen, onClose }) => {
     validationSchema: registrationSchema,
     onSubmit: async (values) => {
       try {
-        await axios
-          .post(`${API_BASE_URL}/signup`, values)
-          .then((res) => {
-            console.log("entered sucess part");
-            toast.success(res.data.message);
-            onClose();
+        const response = await axios.post(`${API_BASE_URL}/signup`, values);
+        
+        if ( response.status === 200 ) {
+      
+          toast.success("Registration Successfully !!!");
+          toast.success(response.data.message);
+          // Close modal and navigate to dashboard or home after successful login
+        setTimeout(()=>{
+          onClose();
           
-           
-            console.log(res.data.message);
-          })
+        },2000)
+         
+        }
+
+ 
        
          
       } catch (err) {
-        console.error(err);
-        
-        toast.error("Registration failed");
+        if (err.response) {
+          const errorMessage = err.response.data.message;
+          toast.error(errorMessage)
+          console.log(errorMessage);
+         
+        } else {
+          
+          toast.error("Registration failed")
+        }
       }
     },
   });
@@ -102,7 +115,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                 className="password-toggle" 
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? <FaEye />: <FaEyeSlash />}
               </span>
               
             </div>

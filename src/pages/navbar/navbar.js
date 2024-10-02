@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./Navbar.css";
 import RegisterModal from "../modalPage/registration";
 import LoginModal from "../modalPage/login";
@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearUserId } from "../../redux/userslice";
 import { Link } from "react-router-dom";
 
+import { CiBookmark } from "react-icons/ci";
+import { FaRegBookmark } from "react-icons/fa6";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -15,6 +17,7 @@ const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [iscreateSoryOpen, setIsCreateStoryOpen] = useState(false);
+  const [username, setUsername] = useState(null);
   const userIDfromREdux = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
 
@@ -29,9 +32,30 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const syncUsernameFromSession = () => {
+    setUsername(sessionStorage.getItem("username"));
+  };
+  useEffect(() => {
+    // Sync username on mount
+    syncUsernameFromSession();
 
+    // Listen for sessionStorage changes (e.g., on login)
+    const handleStorageChange = () => {
+      syncUsernameFromSession();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [userIDfromREdux]);
   const handleLogout = () => {
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("user");
     dispatch(clearUserId());
+    setUsername(null);
     setIsMenuOpen(false); // Close menu on logout
   };
 
@@ -54,7 +78,7 @@ const Navbar = () => {
 
       {/* Conditionally render the navbar options */}
       <div className={`navbar-options ${isMenuOpen ? "active" : ""}`}>
-        {userIDfromREdux ? (
+        {username ? (
           <>
             <div className="user-profile" id="p1">
               <img
@@ -63,12 +87,12 @@ const Navbar = () => {
                 onError={(e) => (e.target.src = "default-profile-pic.png")} // Fallback image
               />
               <span className="profile-info">
-                {/* <p>{userIDfromREdux}</p> */}UserName
+                {username}
               </span>
             </div>
 
             <button className="btn-bookmarks">
-              <Link to="/bookmarks">Bookmarks</Link>
+              <Link to="/bookmarks"> <FaRegBookmark/> Bookmarks</Link>
             </button>
 
             <button className="btn-add-story" onClick={openCreateSoryModal}>
@@ -82,9 +106,9 @@ const Navbar = () => {
 
             <div className="user-profile" id="p2">
               <img
-                src="https://via.placeholder.com/40"
+                src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659651_960_720.png"
                 alt="User Profile"
-                onError={(e) => (e.target.src = "default-profile-pic.png")} // Fallback image
+                
                 onClick={handleUserProfileClick}
               />
               <div className="profile-info">
@@ -93,7 +117,7 @@ const Navbar = () => {
             </div>
 
             <div className="username-box">
-              <p>username</p>
+              <p>{username}</p>
               <div className="profile-dropdown">
                 <button className="btn-logout logout2" onClick={handleLogout}>
                   Logout

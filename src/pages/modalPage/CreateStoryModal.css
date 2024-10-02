@@ -76,6 +76,7 @@
 /* Slide Form Fields */
 .slide-form .form-group {
   margin-bottom: 15px;
+  width:95%
 }
 
 .slide-form label {
@@ -208,7 +209,12 @@ textarea {
   }
 
   .post-section {
-    text-align: center;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Adjust to set vertical space */
+  text-align: center;
   }
 
   .close-modal {
@@ -221,7 +227,7 @@ textarea {
 @media only screen and (max-width: 480px) {
   .modal-content {
     width: 95%;
-    padding: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
   }

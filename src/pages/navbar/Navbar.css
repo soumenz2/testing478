@@ -26,6 +26,7 @@
   background-color: #f88a8a;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(247, 147, 147, 0.918);
 }
 
 .btn-register:hover, .btn-signin:hover, .btn-bookmarks:hover, .btn-add-story:hover {
@@ -156,6 +157,7 @@
     /* width: 100%; */
     width: 30%;
     margin-bottom: 1rem;
+ 
   }
 
   .menu-icon {

@@ -3,11 +3,14 @@ import axios from 'axios';
 import './BookmarkPage.css'; 
 import API_BASE_URL from '../../config/config'; 
 import { useSelector } from "react-redux";
+import SlideDetailModal from '../modalPage/bookmarkSlideModal';
 
 const BookmarkPage = () => {
   const [bookmarks, setBookmarks] = useState([]);
-  const [expanded, setExpanded] = useState(false); 
   const [loading, setLoading] = useState(true); 
+  const [selectedslideId,setSelectedSlideId]=useState(null)
+  const [selectedstoryId,setSelectedStoryId]=useState(null)
+
   const userIDfromREdux = useSelector((state) => state.user.userId);
   
   useEffect(() => {
@@ -25,59 +28,56 @@ const BookmarkPage = () => {
       setLoading(false); // Set loading to false after fetching
     }
   };
-
-  const handleSeeMore = () => {
-    setExpanded(true); // Expand to show all bookmarks
-  };
-
-  // Get the first 4 bookmarks or all if expanded
-  const visibleBookmarks = bookmarks.slice(0, expanded ? bookmarks.length : 4); 
-
-  const renderMedia = (bookmark) => {
-    const isVideo = bookmark.imageOrVideoURl.endsWith('.mp4') || bookmark.imageOrVideoURl.endsWith('.mov'); // You can add other video formats if needed
-
-    if (isVideo) {
-      return (
-        <video controls className="bookmark-media">
-          <source src={bookmark.imageUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      );
-    } else {
-      return (
-        <img
-          src={bookmark.imageOrVideoURl}
-          alt={bookmark.heading}
-          className="bookmark-media"
-        />
-      );
-    }
+  const handleStoryClick = ( slideId ,storyId) => {
+    setSelectedSlideId( slideId );
+    setSelectedStoryId(storyId)
+ 
   };
 
   return (
     <div className="bookmark-page">
       <h2>Your Bookmarks</h2>
       
-      {loading ? ( // Render loading state
+      {loading ? ( 
         <div className="loading-indicator">Loading bookmarks...</div>
       ) : (
         <>
           <div className="bookmark-grid">
-            {visibleBookmarks.map((bookmark, index) => (
-              <div key={index} className="bookmark-card">
-                {renderMedia(bookmark)} {/* Conditionally render image or video */}
+            {bookmarks.map((bookmark, index) => (
+              <div key={index} className="bookmark-card" onClick={()=>handleStoryClick(bookmark.slideID,bookmark.storyID)}>
+                {bookmark.imageOrVideoURl.endsWith('.mp4') ? (
+                <video
+                  src={bookmark.imageOrVideoURl}
+                  autoPlay
+                  muted
+                  playsInline
+                  style={{ width: '100%', height: '70%', objectFit: 'cover' }}
+                />
+              ) : (
+                <img
+                  src={bookmark.imageOrVideoURl}
+                  alt={`Slide ${0 + 1}`}
+                  style={{ width: '100%', height: '70%', objectFit: 'cover' }}
+                />
+              )}
                 <h3>{bookmark.heading}</h3>
-                <p>{bookmark.description}</p>
+                <p className='description-p'>{bookmark.description}</p>
               </div>
             ))}
           </div>
 
-          {!expanded && bookmarks.length > 4 && (
-            <button className="see-more-btn" onClick={handleSeeMore}>
-              See More
-            </button>
-          )}
+          
         </>
+      )}
+      {selectedslideId  && (
+        <div className="story-modal-home-container">
+          <SlideDetailModal
+            slideID={selectedslideId}
+            storyID={selectedstoryId}
+            onClose={() => setSelectedSlideId( null )}
+           
+          />
+        </div>
       )}
     </div>
   );

@@ -41,7 +41,7 @@
 .story-header {
   position: relative;
   top: 0;
-  width: 100%;
+  width: 96%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,9 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding:10px
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 
@@ -126,7 +128,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 600px;
+  height: 535px;
   overflow: hidden;
 
 }
@@ -155,7 +157,7 @@ video {
 .slide-navigation {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 button {

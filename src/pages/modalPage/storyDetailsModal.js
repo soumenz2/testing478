@@ -301,7 +301,7 @@ const handleDownload = () => {
     const currentMedia = slides[currentSlide].imageOrVideoURl;
     const fileName = `slidemedia_${currentSlide + 1}${currentMedia.endsWith('.mp4') ? '.mp4' : '.jpg'}`;
 
-    fetch(currentMedia)
+    fetch(currentMedia,)
       .then(response => response.blob())
       .then(blob => {
         const url = URL.createObjectURL(blob);
@@ -380,6 +380,7 @@ const handleDownload = () => {
                       <img
                         src={slides[currentSlide].imageOrVideoURl}
                         alt={`Slide ${ currentSlide + 1 }`}
+                        style={{ width: '100%', height: '40%', objectFit: 'cover' }}
                       />
                     )}
                     <h2>{slides[currentSlide].heading}</h2>

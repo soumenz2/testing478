@@ -78,7 +78,7 @@ const SlideDetailModal = (props) => {
     if (props?.storyID != null) {
       props?.onClose();
     }
-    navigate('/');
+    navigate('/bookmarks');
   };
 
   const handleShare = () => {
@@ -253,13 +253,14 @@ const SlideDetailModal = (props) => {
                       autoPlay
                       muted
                       playsInline
-                      style={{ width: '100%', height: '50%', objectFit: 'cover' }}
+                      style={{ width: '100%', height: '40%', objectFit: 'cover' }}
                     />
                   ) : (
                     <img
                       className="story-image"
                       src={slide.imageOrVideoURl}
                       alt="Slide"
+                      style={{ width: '100%', height: '40%', objectFit: 'cover' }}
                     />
                   )}
                  

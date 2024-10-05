@@ -128,7 +128,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 535px;
+  height: 70vh;
   overflow: hidden;
 
 }
@@ -280,6 +280,6 @@ button:disabled {
 }
 
 .story-image {
-  height: 500px !important;
+ 
   width: 100% !important;
 }
